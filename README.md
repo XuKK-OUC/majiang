@@ -5,8 +5,11 @@
 [spring官网](https://spring.io/guides/)
 [spring官网]spring boot官网
 #工具
-git
+Git
+Visual Paradigml 画图工具 类图 时序图 流程图
+Flyway 数据库版本管理  V1__create_user_table.sql
 本地再次提交代码 2019/7/3 20:48
+
 
 别人提交了代码
 修复冲突
@@ -14,13 +17,27 @@ git
 ```
 sql腳本
 CREATE CACHED TABLE PUBLIC.USER(
-    ID INT DEFAULT (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_ECC7E18A_0606_4816_A7D0_D7B2F741C719) NOT NULL NULL_TO_DEFAULT SEQUENCE PUBLIC.SYSTEM_SEQUENCE_ECC7E18A_0606_4816_A7D0_D7B2F741C719,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     NAME VARCHAR(50),
     ACCOUNT_ID VARCHAR(50),
     TOKEN CHAR(36),
     GMT_CREATE BIGINT,
     GMT_MODIFY BIGINT
 )
+
+CREATE TABLE question
+(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    title varchar(50),
+    description text,
+    gmt_create bigint,
+    gmt_modify bigint,
+    creator int,
+    comment_count int DEFAULT 0,
+    view_count int DEFAULT 0,
+    like_count int DEFAULT 0,
+    tag varchar(256)
+);
 
 
 ```

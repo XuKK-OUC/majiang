@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>码匠社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+</head>
+<body>
+<div th:if="${session.user} == null ">
+    <a href="https://github.com/login/oauth/authorize?client_id=a5ab359c706921bbbfc6&redirect_uri=http://localhost:8087/callback&state=1&scope=user">登录</a>
+</div>
+<div th:if="${session.user} != null ">
+    <a href="https://github.com/login/oauth/authorize?client_id=a5ab359c706921bbbfc6&redirect_uri=http://localhost:8087/callback&state=1&scope=user">我<span th:text="${session.user.getName()}"></span></a>
+</div>
+
+</body>
+
+</html>

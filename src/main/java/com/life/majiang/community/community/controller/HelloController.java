@@ -4,9 +4,7 @@ import com.life.majiang.community.community.mapper.UserMapper;
 import com.life.majiang.community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +22,21 @@ public class HelloController {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 默认跳转到index页面
+     * @return
+     */
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
+
+    /**
+     *用户登录验证
+     * @param request
+     * @return
+     */
     @GetMapping("/index2")
     public String index2(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
