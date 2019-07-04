@@ -10,6 +10,7 @@ git
 
 别人提交了代码
 修复冲突
+使用h2数据库
 ```
 sql腳本
 CREATE CACHED TABLE PUBLIC.USER(
