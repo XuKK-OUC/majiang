@@ -2,12 +2,17 @@ package com.life.majiang.community.community.controller;
 
 import com.life.majiang.community.community.dto.AccessTokenDTO;
 import com.life.majiang.community.community.dto.GithubUser;
+import com.life.majiang.community.community.mapper.UserMapper;
+import com.life.majiang.community.community.model.User;
 import com.life.majiang.community.community.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
 public class AuthorizeController {
@@ -21,6 +26,8 @@ public class AuthorizeController {
     @Value("${github.redirect_uri}")
     private  String redirect_uri;
 
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 用户点击登录按钮后,从github上认证后,就返回到callback中
@@ -30,7 +37,7 @@ public class AuthorizeController {
      * @return
      */
     @GetMapping("/callback")
-    public String callback(@RequestParam(name = "code")String code,@RequestParam(name = "state")String state){
+    public String callback(@RequestParam(name = "code")String code, @RequestParam(name = "state")String state, HttpServletRequest request){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(redirect_uri);   //将各种信息存放到application.properties
@@ -40,10 +47,24 @@ public class AuthorizeController {
         //获得accesstoken
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         //获得用户的登录信息
-        GithubUser user = githubProvider.getUser(accessToken);
-        System.out.println(user.getLogin());
-        System.out.println(user.getId());
+        GithubUser githubUser = githubProvider.getUser(accessToken);
+        if(githubUser != null){
+            User user = new User();
+            user.setToken(UUID.randomUUID().toString());
+            user.setName(githubUser.getLogin());
+            user.setAccount_id(String.valueOf(githubUser.getId()));
+            user.setGmt_create(System.currentTimeMillis());
+            user.setGmt_modify(user.getGmt_create());
+            userMapper.insert(user);
+            //登录成功,写cookie和session
+            request.getSession().setAttribute("user",githubUser);
+            return "redirect:/index";  //redirect:/index, 找的是controller中地址映射为 /index的方法
+        }
+        else{
+            //登录失败,重新登录
+            return "redirect:/index";
+        }
 
-        return "index";
+
     }
 }
