@@ -4,6 +4,7 @@ import com.life.majiang.community.community.dto.AccessTokenDTO;
 import com.life.majiang.community.community.dto.GithubUser;
 import com.life.majiang.community.community.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvider;
+
+    @Value("${github.client_id}")
+     private String clientId;
+    @Value("${github.client_secret}")
+    private String client_secret;
+    @Value("${github.redirect_uri}")
+    private  String redirect_uri;
+
 
     /**
      * 用户点击登录按钮后,从github上认证后,就返回到callback中
@@ -24,10 +33,10 @@ public class AuthorizeController {
     public String callback(@RequestParam(name = "code")String code,@RequestParam(name = "state")String state){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
-        accessTokenDTO.setRedirect_uri("http://localhost:8087/callback");
+        accessTokenDTO.setRedirect_uri(redirect_uri);   //将各种信息存放到application.properties
         accessTokenDTO.setState(state);
-        accessTokenDTO.setClient_id("a5ab359c706921bbbfc6");
-        accessTokenDTO.setClient_secret("8100c028cdce14aa88a68eafba8169224db5bfbf");
+        accessTokenDTO.setClient_id(clientId);
+        accessTokenDTO.setClient_secret(client_secret);
         //获得accesstoken
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         //获得用户的登录信息
