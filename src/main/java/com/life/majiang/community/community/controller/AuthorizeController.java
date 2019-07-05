@@ -51,6 +51,7 @@ public class AuthorizeController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         //获得用户的登录信息
         GithubUser githubUser = githubProvider.getUser(accessToken);
+        System.out.println("返回的githubUSer"+githubUser);
         if(githubUser != null){
             User user = new User();
             String token = UUID.randomUUID().toString();
@@ -59,6 +60,8 @@ public class AuthorizeController {
             user.setAccount_id(String.valueOf(githubUser.getId()));
             user.setGmt_create(System.currentTimeMillis());
             user.setGmt_modify(user.getGmt_create());
+            user.setAvatar_url(githubUser.getAvatar_url());
+            System.out.println("要插入的user"+user);
             userMapper.insert(user);
             response.addCookie(new Cookie("token",token));
             return "redirect:/index2";  //redirect:/index, 找的是controller中地址映射为 /index的方法
