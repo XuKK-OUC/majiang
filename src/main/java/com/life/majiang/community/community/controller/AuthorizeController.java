@@ -5,6 +5,7 @@ import com.life.majiang.community.community.dto.GithubUser;
 import com.life.majiang.community.community.mapper.UserMapper;
 import com.life.majiang.community.community.model.User;
 import com.life.majiang.community.community.provider.GithubProvider;
+import com.life.majiang.community.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -27,9 +29,9 @@ public class AuthorizeController {
     @Value("${github.redirect_uri}")
     private  String redirect_uri;
 
-    @Autowired
-    private UserMapper userMapper;
 
+    @Autowired
+    private UserService userService;
     /**
      * 用户点击登录按钮后,从github上认证后,就返回到callback中
      * 根据认证得到的code和state再调用access_token接口获得accesstoken,最后在使用accesstoken调用user接口获得登录信息
@@ -58,11 +60,9 @@ public class AuthorizeController {
             user.setToken(token);
             user.setName(githubUser.getLogin());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModify(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
             System.out.println("要插入的user"+user);
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token",token));
             return "redirect:/";  //redirect:/index, 找的是controller中地址映射为 /index的方法
         }
@@ -71,6 +71,18 @@ public class AuthorizeController {
             return "redirect:/";
         }
 
-
     }
+    /**
+     * 退出登录方法
+     */
+    @GetMapping("logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        //request.getSession().invalidate();
+        request.getSession().removeAttribute("user");//删除session
+        Cookie cookie = new Cookie("token", null); //删除cookie
+        cookie.setMaxAge(0);  //立即删除
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
 }

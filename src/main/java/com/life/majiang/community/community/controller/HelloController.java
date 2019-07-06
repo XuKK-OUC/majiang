@@ -32,34 +32,25 @@ public class HelloController {
 
     @Autowired
     private QuestionService questionService;
+
     /**
      * 默认跳转到index页面
+     *
      * @return
      */
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         Model model,
-                        @RequestParam(name = "page",defaultValue = "1")Integer page, //当前页数
-                        @RequestParam(name = "size",defaultValue = "5")Integer size  //每页页数
-                        ) {
-        Cookie[] cookies = request.getCookies();
-        if(cookies==null){
-        return "indexold";
-        }
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if(user != null){
-                    request.getSession().setAttribute("user",user);
-                    PageDto pagenation = questionService.list(page,size);
-                    model.addAttribute("pagenation",pagenation);
-                }
-                break;
-            }
-        }
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "5") Integer size) {
+       /* User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "indexold";
+        }*/
+        PageDto pagenation = questionService.list(page, size);
+        model.addAttribute("pagenation", pagenation);
 
-       // PageDto pagenation = questionService.list(page,size);
+        // PageDto pagenation = questionService.list(page,size);
         //model.addAttribute("pagenation",pagenation);
 
         return "index";
