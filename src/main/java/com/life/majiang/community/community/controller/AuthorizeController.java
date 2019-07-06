@@ -57,18 +57,18 @@ public class AuthorizeController {
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setName(githubUser.getLogin());
-            user.setAccount_id(String.valueOf(githubUser.getId()));
-            user.setGmt_create(System.currentTimeMillis());
-            user.setGmt_modify(user.getGmt_create());
-            user.setAvatar_url(githubUser.getAvatar_url());
+            user.setAccountId(String.valueOf(githubUser.getId()));
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModify(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             System.out.println("要插入的user"+user);
             userMapper.insert(user);
             response.addCookie(new Cookie("token",token));
-            return "redirect:/index2";  //redirect:/index, 找的是controller中地址映射为 /index的方法
+            return "redirect:/";  //redirect:/index, 找的是controller中地址映射为 /index的方法
         }
         else{
             //登录失败,重新登录
-            return "redirect:/index2";
+            return "redirect:/";
         }
 
 

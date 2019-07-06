@@ -67,7 +67,7 @@ public class PublishController {
             model.addAttribute("error","用户未登陆");
             return "publish";
         }
-        System.out.println(user.getAvatar_url());
+        System.out.println(user.getAvatarUrl());
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
@@ -75,9 +75,8 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModify(question.getGmtCreate());
-        question.setAvatarUrl(user.getAvatar_url());
         System.out.println("要插入的问题为"+question);
         questionMapper.create(question);
-        return "redirect:index2";
+        return "redirect:/";
     }
 }

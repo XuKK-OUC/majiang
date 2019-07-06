@@ -11,6 +11,7 @@ import lombok.Data;
 public class GithubUser {
     private String login;
     private long id;
-    private String avatar_url;
+    //private String avatar_url;
+    private String avatarUrl;  //fastjson 可以自动把下划线标示的属性映射到驼峰标示的属性
 
 }

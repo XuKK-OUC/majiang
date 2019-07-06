@@ -49,7 +49,7 @@ public class GithubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
            String string = response.body().string();
-            GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
+            GithubUser githubUser = JSON.parseObject(string, GithubUser.class);  // string中的avatar_url--> GithubUser中的avatarUrl  fastjson 可以自动把下划线标示的属性映射到驼峰标示的属性
             return  githubUser;
         }catch (IOException e){
 
