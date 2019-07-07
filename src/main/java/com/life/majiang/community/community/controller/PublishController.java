@@ -30,10 +30,10 @@ public class PublishController {
     }
     //发布问题
     @PostMapping("/doPublish")
-    public String doPublish(@RequestParam("title")String title,
-                            @RequestParam("description")String description,
-                            @RequestParam("tag")String tag,
-                            @RequestParam("id")int id,
+    public String doPublish(@RequestParam(name = "title",required = false)String title,
+                            @RequestParam(name = "description",required = false)String description,
+                            @RequestParam(name="tag",required = false)String tag,
+                            @RequestParam(name = "id",required = false)Integer id,
                             HttpServletRequest request,
                             Model model){
         model.addAttribute("title",title);
@@ -56,19 +56,7 @@ public class PublishController {
             return "publish";
         }
         System.out.println("得到cookies的个数"+cookies.length);
-        User user = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                String token = cookie.getValue();
-                user = userMapper.findByToken(token);
-                System.out.println(user);
-                //1af6843d-f3eb-4363-beb4-7004362c9983
-                if(user != null){
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
-        }
+        User user = (User)request.getSession().getAttribute("user");
         if(user==null){
             model.addAttribute("error","用户未登陆");
             return "publish";

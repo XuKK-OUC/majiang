@@ -43,3 +43,4 @@ CREATE TABLE question
 ```
 IT教程吧
 https://www.itjc8.com/
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
