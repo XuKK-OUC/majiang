@@ -2,6 +2,8 @@ package com.life.majiang.community.community.service;
 
 import com.life.majiang.community.community.dto.PageDto;
 import com.life.majiang.community.community.dto.QuestionDTO;
+import com.life.majiang.community.community.exception.CustomizeErrorCode;
+import com.life.majiang.community.community.exception.CustomizeException;
 import com.life.majiang.community.community.mapper.QuestionMapper;
 import com.life.majiang.community.community.mapper.UserMapper;
 import com.life.majiang.community.community.model.Question;
@@ -80,6 +82,9 @@ public class QuestionService {
 
     public QuestionDTO getById(int id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if(question==null){
+            throw new CustomizeException(CustomizeErrorCode.Question_Not_Found);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());

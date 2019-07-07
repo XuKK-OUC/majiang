@@ -59,7 +59,7 @@ public class HelloController {
 
     /**
      *用户登录验证
-     * @param request
+     * @param
      * @return
      */
   /*  @GetMapping("/index2")
@@ -78,4 +78,9 @@ public class HelloController {
 
         return "index";
     }*/
+  @GetMapping("/hello")
+  public String hello(){
+      int i=10/0;
+      return "/";
+  }
 }

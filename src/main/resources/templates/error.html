@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>码匠社区</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/css/community.css"/>
+</head>
+<body>
+<div th:insert="~{navigation::header}"></div>
+<div class="jumbotron community-error">
+    <h1>出错了!!!</h1>
+    <span th:text="${message}"></span>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">穿越回主页</a></p>
+</div>
+</body>
+</html>

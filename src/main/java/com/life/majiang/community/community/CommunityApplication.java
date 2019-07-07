@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.life.majiang.community.community.mapper")
-public class CommunityApplication {
+public class CommunityApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(CommunityApplication.class, args);
