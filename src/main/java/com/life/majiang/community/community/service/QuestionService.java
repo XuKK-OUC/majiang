@@ -4,6 +4,7 @@ import com.life.majiang.community.community.dto.PageDto;
 import com.life.majiang.community.community.dto.QuestionDTO;
 import com.life.majiang.community.community.exception.CustomizeErrorCode;
 import com.life.majiang.community.community.exception.CustomizeException;
+import com.life.majiang.community.community.mapper.QuestionExtMapper;
 import com.life.majiang.community.community.mapper.QuestionMapper;
 import com.life.majiang.community.community.mapper.UserMapper;
 import com.life.majiang.community.community.model.Question;
@@ -22,6 +23,8 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
     public PageDto list(Integer page, Integer size) {
         PageDto pageDto = new PageDto();
         int totalCount =(int) questionMapper.countByExample(new QuestionExample());
@@ -114,5 +117,12 @@ public class QuestionService {
             questionMapper.updateByExampleSelective(updateQuestion, example);
         }
 
+    }
+
+    public void incView(int id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
