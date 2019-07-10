@@ -13,6 +13,9 @@ body{
     width: 38px;
     height: 38px;
 }
+.media-body{
+    padding-top: 15px;
+}
 
 .text-desc{
     font-size: 12px;
@@ -30,4 +33,11 @@ body{
 
 .community-error{
     margin:50px;
+}
+.comment{
+    margin: 15px;
+}
+.btn-comment{
+    float: right;
+    margin-bottom: 15px;
 }

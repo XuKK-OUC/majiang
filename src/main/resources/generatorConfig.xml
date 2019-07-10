@@ -36,6 +36,7 @@
         <!--数据库中的表和对应的实体类-->
         <table tableName="user" domainObjectName="User" ></table>
         <table tableName="question" domainObjectName="Question"></table>
+        <table tableName="comment" domainObjectName="Comment"></table>
 
     </context>
 </generatorConfiguration>

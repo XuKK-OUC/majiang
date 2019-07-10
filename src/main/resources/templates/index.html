@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="css/community.css"/>
 </head>
+<script type="application/javascript">
+    window.onload=function () {
+        var closable = window.localStorage.getItem("closable");
+        if(closable=="true"){
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation::header}"></div>
 <div class="container-fluid main">

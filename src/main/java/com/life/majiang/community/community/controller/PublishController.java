@@ -33,7 +33,7 @@ public class PublishController {
     public String doPublish(@RequestParam(name = "title",required = false)String title,
                             @RequestParam(name = "description",required = false)String description,
                             @RequestParam(name="tag",required = false)String tag,
-                            @RequestParam(name = "id",required = false)Integer id,
+                            @RequestParam(name = "id",required = false)long id,
                             HttpServletRequest request,
                             Model model){
         model.addAttribute("title",title);
@@ -77,7 +77,7 @@ public class PublishController {
 
     //跳转到编辑问题页面
     @GetMapping("publish/{id}")
-    public String edit(@PathVariable("id") int id,Model model){
+    public String edit(@PathVariable("id") long id,Model model){
         QuestionDTO question = questionService.getById(id);
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());
