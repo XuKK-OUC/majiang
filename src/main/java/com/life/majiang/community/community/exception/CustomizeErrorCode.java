@@ -6,7 +6,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     NO_Login(203,"当前操作需要用户登录,请先登录"),
     Server_Error(500,"服务端错误"),
     Type_Error_Wrong(501,"评论类型错误或不存在"),
-    Comment_Not_Found(502,"评论不存在");
+    Comment_Not_Found(502,"评论不存在"),
+    Comment_Is_Empty(205,"评论内容为空");
     private String message;
     private Integer code;
     CustomizeErrorCode(Integer code,String message) {

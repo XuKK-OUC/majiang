@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
-    @Autowired
-    UserMapper userMapper;
+    //@Autowired
+    //UserMapper userMapper;
     @Autowired
     QuestionService questionService;
     //跳转到发布问题页面
@@ -33,7 +33,7 @@ public class PublishController {
     public String doPublish(@RequestParam(name = "title",required = false)String title,
                             @RequestParam(name = "description",required = false)String description,
                             @RequestParam(name="tag",required = false)String tag,
-                            @RequestParam(name = "id",required = false)long id,
+                            @RequestParam(name = "id",required = false)Long id,
                             HttpServletRequest request,
                             Model model){
         model.addAttribute("title",title);
@@ -69,7 +69,10 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModify(question.getGmtCreate());
-        question.setId(id);
+        if(id!=null){
+            question.setId(id);
+        }
+
         questionService.createOrUpdate(question);
         //questionMapper.create(question);
         return "redirect:/";

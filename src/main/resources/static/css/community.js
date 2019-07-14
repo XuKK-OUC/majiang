@@ -2,6 +2,9 @@ function postd() {
     var questionId = $("#question_id").val();
 
     var content = $("#comment_content").val();
+    if(!content){
+        alert("评论内容不能为空")
+    }
     $.ajax({
         type: "post",
         contentType:"application/json",
@@ -13,7 +16,8 @@ function postd() {
         }),
         success: function (response) {
             if(response.code==200){
-                $("#comment_section").hide();
+                //$("#comment_section").hide();
+                window.location.reload();
             }
             else{
                 if(response.code==203){
