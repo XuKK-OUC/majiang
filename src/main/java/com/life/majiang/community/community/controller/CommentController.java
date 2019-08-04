@@ -1,7 +1,9 @@
 package com.life.majiang.community.community.controller;
 
 import com.life.majiang.community.community.dto.CommentCreateDto;
+import com.life.majiang.community.community.dto.CommentDto;
 import com.life.majiang.community.community.dto.ResultDto;
+import com.life.majiang.community.community.enums.CommentTypeEnum;
 import com.life.majiang.community.community.exception.CustomizeErrorCode;
 import com.life.majiang.community.community.model.Comment;
 import com.life.majiang.community.community.model.User;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -40,4 +43,13 @@ public class CommentController {
         commentService.insert(comment);
         return ResultDto.okof();
     }
+
+    @ResponseBody
+
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDto<List<CommentDto>> comments(@PathVariable (name = "id")long id){
+        List<CommentDto> commentDtos = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDto.okof(commentDtos);
+    }
+
 }

@@ -2,7 +2,7 @@ package com.life.majiang.community.community.controller;
 
 import com.life.majiang.community.community.dto.CommentDto;
 import com.life.majiang.community.community.dto.QuestionDTO;
-import com.life.majiang.community.community.mapper.QuestionMapper;
+import com.life.majiang.community.community.enums.CommentTypeEnum;
 import com.life.majiang.community.community.service.CommentService;
 import com.life.majiang.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class QuestionController {
     @GetMapping("/ques/{id}")
     public String quesiton(@PathVariable(name = "id") long id, Model model){
         QuestionDTO questionDTO = questionService.getById(id);
-       List<CommentDto> comments =  commentService.listByQuestionId(id);
+       List<CommentDto> comments =  commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question",questionDTO);
